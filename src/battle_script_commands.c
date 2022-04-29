@@ -1530,8 +1530,21 @@ static void Cmd_attackcanceler(void)
         gBattleCommunication[MISS_TYPE] = B_MSG_PROTECTED;
         gBattlescriptCurrInstr++;
     }
-    else
+    //Activate Color Change before move damage.
+    else if (gBattleMons[gBattlerTarget].ability == ABILITY_COLOR_CHANGE 
+             && !IS_BATTLER_OF_TYPE(gBattlerTarget, moveType)
+             && gBattlerTarget != gBattlerAttacker)
     {
+        PREPARE_TYPE_BUFFER(gBattleTextBuff1, moveType);
+        SET_BATTLER_TYPE(gBattlerTarget, moveType);
+        gBattlerAbility = gBattlerTarget;
+        BattleScriptPushCursor();
+        PrepareStringBattle(STRINGID_EMPTYSTRING3, gBattlerAttacker);
+        gBattleCommunication[MSG_DISPLAY] = 1;
+        gBattlescriptCurrInstr = BattleScript_ColorChangeActivates;
+        return;
+    }
+    else {
         gBattlescriptCurrInstr++;
     }
 }
