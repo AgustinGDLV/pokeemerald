@@ -829,6 +829,7 @@ gBattleAnims_General::
 	.4byte General_StrongWinds              @ B_ANIM_STRONG_WINDS
 	.4byte General_PrimalReversion          @ B_ANIM_PRIMAL_REVERSION
 	.4byte General_AquaRingHeal             @ B_ANIM_AQUA_RING_HEAL
+	.4byte General_SetSpikes				@ B_ANIM_SET_SPIKES
 
 	.align 2
 gBattleAnims_Special::
@@ -19892,6 +19893,7 @@ Move_BONE_RUSH:
 	blendoff
 	end
 
+General_SetSpikes:
 Move_SPIKES:
 	loadspritegfx ANIM_TAG_SPIKES
 	monbg ANIM_DEF_PARTNER

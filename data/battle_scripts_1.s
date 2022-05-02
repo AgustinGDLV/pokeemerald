@@ -9426,3 +9426,11 @@ BattleScript_MagicianActivates::
 	call BattleScript_AbilityPopUp
 	call BattleScript_ItemSteal
 	return
+
+BattleScript_LooseQuillsActivates::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	playanimation BS_ATTACKER, B_ANIM_SET_SPIKES
+	printstring STRINGID_SPIKESSCATTERED
+	waitstate
+	return

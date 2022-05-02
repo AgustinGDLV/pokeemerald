@@ -56,7 +56,6 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 #include "battle_util.h"
-
 extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
 
 extern const u8* const gBattleScriptsForMoveEffects[];

@@ -1526,9 +1526,12 @@ static void AnimSpikes(struct Sprite *sprite)
 {
     u16 x;
     u16 y;
-
+    
     InitSpritePosToAnimAttacker(sprite, TRUE);
-    SetAverageBattlerPositions(gBattleAnimTarget, FALSE, &x, &y);
+    if (gBattleAnimAttacker == gBattleAnimTarget) //Loose Quills check, temp. fix
+        SetAverageBattlerPositions(gBattleAnimTarget ^ BIT_SIDE, FALSE, &x, &y);
+    else
+        SetAverageBattlerPositions(gBattleAnimTarget, FALSE, &x, &y);
 
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];

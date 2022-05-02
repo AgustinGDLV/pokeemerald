@@ -45,6 +45,7 @@
 #include "constants/species.h"
 #include "constants/trainers.h"
 #include "constants/weather.h"
+#include "mgba_printf/mgba.h"
 
 extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
 
@@ -5434,6 +5435,25 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 }
             }
             break;
+        case ABILITY_LOOSE_QUILLS:
+            if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+             && gBattleMons[gBattlerAttacker].hp != 0
+             && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+             && TARGET_TURN_DAMAGED
+             && IsMoveMakingContact(move, gBattlerAttacker)
+             && CanSetSpikes(battler))
+            {
+                u8 targetSide = GetBattlerSide(gBattlerAttacker);
+                gSideStatuses[targetSide] |= SIDE_STATUS_SPIKES;
+                gSideTimers[targetSide].spikesAmount++;
+
+                gBattlerAttacker = gBattlerTarget;
+                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_LooseQuillsActivates;
+                effect++;
+            }
+            break;
         }
         break;
     case ABILITYEFFECT_MOVE_END_ATTACKER: // Same as above, but for attacker
@@ -10034,4 +10054,10 @@ bool32 IsBattlerWeatherAffected(u8 battlerId, u32 weatherFlags)
         return TRUE;
     }
     return FALSE;
+}
+
+bool32 CanSetSpikes(u8 battlerId)
+{
+    u8 targetSide = GetBattlerSide(gBattlerAttacker) ^ BIT_SIDE;
+    return gSideTimers[targetSide].spikesAmount != 3;
 }
