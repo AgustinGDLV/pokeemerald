@@ -1887,7 +1887,23 @@ u8 TrySetCantSelectMoveBattleScript(void)
             limitations++;
         }
     }
-
+    
+    if (GetBattlerAbility(gActiveBattler) == ABILITY_TERRITORIAL && gBattleMoves[move].effect == EFFECT_PROTECT
+        && gDisableStructs[gActiveBattler].isFirstTurn && gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+    {
+        gCurrentMove = move;
+        gLastUsedAbility = ABILITY_TERRITORIAL;
+        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+        {
+            gProtectStructs[gActiveBattler].palaceUnableToUseMove = TRUE;
+        }
+        else
+        {
+            gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveTerritorial;
+            limitations++;
+        }
+    }
+    
     if (gBattleMons[gActiveBattler].pp[moveId] == 0)
     {
         if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
@@ -1958,6 +1974,10 @@ u8 CheckMoveLimitations(u8 battlerId, u8 unusableMoves, u8 check)
             unusableMoves |= gBitTable[i];
         // Gorilla Tactics
         else if (GetBattlerAbility(battlerId) == ABILITY_GORILLA_TACTICS && *choicedMove != MOVE_NONE && *choicedMove != 0xFFFF && *choicedMove != gBattleMons[battlerId].moves[i])
+            unusableMoves |= gBitTable[i];
+        // Territorial
+        else if (GetBattlerAbility(battlerId) == ABILITY_TERRITORIAL && gBattleMoves[gBattleMons[battlerId].moves[i]].effect == EFFECT_PROTECT
+                 && gDisableStructs[battlerId].isFirstTurn && gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
             unusableMoves |= gBitTable[i];
     }
     return unusableMoves;

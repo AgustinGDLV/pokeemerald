@@ -734,6 +734,7 @@ static const u8 sText_CantEscapeBecauseOfCurrentMove[] = _("{B_DEF_NAME_WITH_PRE
 static const u8 sText_NeutralizingGasEnters[] = _("Neutralizing Gas filled the area!");
 static const u8 sText_NeutralizingGasOver[] = _("The effects of Neutralizing\nGas wore off!");
 static const u8 sText_TerritorialActivates[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} is defending\nits allies!");
+static const u8 sText_TerritorialDoesntAllow[] = _("{B_LAST_ABILITY} prevents\nthe use of protection!\p");
 static const u8 sText_AttackerAbilityLoweredStat[] = _("{B_ATK_NAME_WITH_PREFIX}'s {B_ATK_ABILITY}\nlowered its {B_BUFF1}!");
 static const u8 sText_RuggedActivates[] = _("{B_ATK_NAME_WITH_PREFIX} withstands\nthe explosion!");
 
@@ -1338,6 +1339,7 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_PKMNTOOKTARGETHIGH - 12] = sText_PkmnTookTargetHigh,
     [STRINGID_TARGETTOOHEAVY - 12] = sText_TargetTooHeavy,
     [STRINGID_TERRITORIALENTERS - 12] = sText_TerritorialActivates,
+    [STRINGID_TERRITORIALDOESNTALLOW - 12] = sText_TerritorialDoesntAllow,
     [STRINGID_ATTACKERABILITYSTATLOWER - 12] = sText_AttackerAbilityLoweredStat,
     [STRINGID_RUGGEDACTIVATES - 12] = sText_RuggedActivates,
 };

@@ -9471,3 +9471,7 @@ BattleScript_RuggedActivatesEnd:
 	jumpifbyte CMP_NO_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_MISSED, BattleScript_ExplosionDoAnimStartLoop
 	call BattleScript_PreserveMissedBitDoMoveAnim
 	goto BattleScript_ExplosionLoop
+
+BattleScript_SelectingNotAllowedMoveTerritorial::
+	printselectionstring STRINGID_TERRITORIALDOESNTALLOW
+	endselectionscript
