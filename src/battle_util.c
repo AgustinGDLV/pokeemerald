@@ -4605,6 +4605,18 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
+        case ABILITY_TERRITORIAL:
+            if (!gSpecialStatuses[battler].switchInAbilityDone && gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+            {
+                gSideTimers[GetBattlerSide(battler)].followmeTimer = 1;
+                gSideTimers[GetBattlerSide(battler)].followmeTarget = battler;
+                gSideTimers[GetBattlerSide(battler)].followmePowder = 0;
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SWITCHIN_TERRITORIAL;
+                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
+                BattleScriptPushCursorAndCallback(BattleScript_SwitchInAbilityMsg);
+                effect++;
+            }
+            break;
         }
         break;
     case ABILITYEFFECT_ENDTURN: // 1

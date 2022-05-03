@@ -3695,6 +3695,15 @@ static void TryDoEventsBeforeFirstTurn(void)
         StopCryAndClearCrySongs();
         BattleScriptExecute(BattleScript_ArenaTurnBeginning);
     }
+
+    //Ensure that Territorial's follow me effect applies correctly after TurnValuesCleanUp.
+    if (IsAbilityOnField(ABILITY_TERRITORIAL))
+    {
+        if (IsAbilityOnSide(0, ABILITY_TERRITORIAL))
+            gSideTimers[0].followmeTimer = 1;
+        else
+            gSideTimers[1].followmeTimer = 1;
+    }
 }
 
 static void HandleEndTurn_ContinueBattle(void)
