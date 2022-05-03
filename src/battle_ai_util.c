@@ -848,7 +848,8 @@ u8 GetMoveDamageResult(u16 move)
 
     for (i = 0; sIgnoredPowerfulMoveEffects[i] != IGNORED_MOVES_END; i++)
     {
-        if (gBattleMoves[move].effect == sIgnoredPowerfulMoveEffects[i])
+        if (gBattleMoves[move].effect == sIgnoredPowerfulMoveEffects[i]
+            && !(gBattleMoves[move].effect == EFFECT_EXPLOSION && GetBattlerAbility(sBattler_AI) == ABILITY_RUGGED))
             break;
     }
 
@@ -860,7 +861,8 @@ u8 GetMoveDamageResult(u16 move)
         {
             for (i = 0; sIgnoredPowerfulMoveEffects[i] != IGNORED_MOVES_END; i++)
             {
-                if (gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].effect == sIgnoredPowerfulMoveEffects[i])
+                if (gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].effect == sIgnoredPowerfulMoveEffects[i]
+                    && !(gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].effect == EFFECT_EXPLOSION && GetBattlerAbility(sBattler_AI) == ABILITY_RUGGED))
                     break;
             }
 

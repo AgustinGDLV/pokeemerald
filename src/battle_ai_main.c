@@ -845,9 +845,10 @@ static s16 AI_CheckBadMove(u8 battlerAtk, u8 battlerDef, u16 move, s16 score)
                 score -= 10;
             break;
         case EFFECT_EXPLOSION:
-            if (!(AI_THINKING_STRUCT->aiFlags & AI_FLAG_WILL_SUICIDE))
+            if (GetBattlerAbility(gBattlerAttacker) == ABILITY_RUGGED)
+                break;
+            else if (!(AI_THINKING_STRUCT->aiFlags & AI_FLAG_WILL_SUICIDE))
                 score -= 2;
-            
             if (effectiveness == AI_EFFECTIVENESS_x0)
             {
                 score -= 10;

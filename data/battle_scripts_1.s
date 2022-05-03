@@ -3028,6 +3028,7 @@ BattleScript_EffectExplosion::
 	attackcanceler
 	attackstring
 	ppreduce
+	jumpifability BS_ATTACKER, ABILITY_RUGGED, BattleScript_RuggedActivates
 	faintifabilitynotdamp
 	setatkhptozero
 	waitstate
@@ -9434,3 +9435,39 @@ BattleScript_LooseQuillsActivates::
 	printstring STRINGID_SPIKESSCATTERED
 	waitstate
 	return
+
+BattleScript_RuggedActivates::
+	jumpifabilitypresent ABILITY_DAMP, BattleScript_DampStopsExplosion
+	call BattleScript_AbilityPopUp
+	setstatchanger STAT_DEF, 1, TRUE
+	statbuffchange STAT_BUFF_ALLOW_PTR, BattleScript_RuggedActivatesSpDef
+	jumpifbyte CMP_LESS_THAN, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_DECREASE, BattleScript_RuggedDefAnim
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_FELL_EMPTY, BattleScript_RuggedActivatesSpDef
+	pause B_WAIT_TIME_SHORTEST
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_MED
+	goto BattleScript_RuggedActivatesSpDef
+BattleScript_RuggedDefAnim:
+	setgraphicalstatchangevalues
+	playanimation BS_ATTACKER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_ATTACKERABILITYSTATLOWER
+	waitmessage B_WAIT_TIME_MED
+BattleScript_RuggedActivatesSpDef:
+	setstatchanger STAT_SPDEF, 1, TRUE
+	statbuffchange STAT_BUFF_ALLOW_PTR, BattleScript_RuggedActivatesEnd
+	jumpifbyte CMP_LESS_THAN, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_DECREASE, BattleScript_RuggedSpDefAnim
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_FELL_EMPTY, BattleScript_RuggedActivatesEnd
+	pause B_WAIT_TIME_SHORTEST
+	printstring STRINGID_ATTACKERABILITYSTATLOWER
+	waitmessage B_WAIT_TIME_MED
+	goto BattleScript_RuggedActivatesEnd
+BattleScript_RuggedSpDefAnim:
+	setgraphicalstatchangevalues
+	printstring STRINGID_ATTACKERABILITYSTATLOWER
+	waitmessage B_WAIT_TIME_MED
+BattleScript_RuggedActivatesEnd:
+	printstring STRINGID_RUGGEDACTIVATES
+	waitstate
+	jumpifbyte CMP_NO_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_MISSED, BattleScript_ExplosionDoAnimStartLoop
+	call BattleScript_PreserveMissedBitDoMoveAnim
+	goto BattleScript_ExplosionLoop

@@ -256,6 +256,7 @@ static const u8 sAsOneIceRiderDescription[] = _("Unnerve and Chilling Neigh.");
 static const u8 sAsOneShadowRiderDescription[] = _("Unnerve and Grim Neigh.");
 static const u8 sLooseQuillsDescription[] = _("Leaves spikes on contact.");
 static const u8 sTerritorialDescription[] = _("Draws attention on entry.");
+static const u8 sRuggedDescription[] = _("Survives self-destruction.");
 
 #if B_EXPANDED_ABILITY_NAMES == TRUE
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
@@ -529,7 +530,8 @@ const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_AS_ONE_ICE_RIDER] = _("As One"),
     [ABILITY_AS_ONE_SHADOW_RIDER] = _("As One"),
     [ABILITY_LOOSE_QUILLS] = _("Loose Quills"),
-    [ABILITY_TERRITORIAL] = _("Territorial")
+    [ABILITY_TERRITORIAL] = _("Territorial"),
+    [ABILITY_RUGGED] = _("Rugged"),
 };
 #else   // 12 characters
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
@@ -1077,4 +1079,5 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
     [ABILITY_AS_ONE_SHADOW_RIDER] = sAsOneShadowRiderDescription,
     [ABILITY_LOOSE_QUILLS] = sLooseQuillsDescription,
     [ABILITY_TERRITORIAL] = sTerritorialDescription,
+    [ABILITY_RUGGED] = sRuggedDescription,
 };

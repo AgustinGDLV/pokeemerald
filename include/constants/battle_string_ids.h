@@ -612,8 +612,10 @@
 #define STRINGID_TARGETTOOHEAVY                       608
 #define STRINGID_PKMNTOOKTARGETHIGH                   609
 #define STRINGID_TERRITORIALENTERS                    610
+#define STRINGID_ATTACKERABILITYSTATLOWER             611
+#define STRINGID_RUGGEDACTIVATES                      612
 
-#define BATTLESTRINGS_COUNT                           611
+#define BATTLESTRINGS_COUNT                           613
 
 // The below IDs are all indexes into battle message tables,
 // used to determine which of a set of messages to print.
