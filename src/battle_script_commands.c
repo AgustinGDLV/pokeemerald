@@ -1930,7 +1930,7 @@ static void Cmd_critcalc(void)
     else
         gIsCriticalHit = FALSE;
 
-    // Counter for Sirfetchd evolution method (caps at 3 per party mon).
+    // Counter for EVO_CRITICAL_HITS.
     partySlot = gBattlerPartyIndexes[gBattlerAttacker];
     if (gIsCriticalHit && GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER
         && !(gBattleTypeFlags & BATTLE_TYPE_MULTI && GetBattlerPosition(gBattlerAttacker) == B_POSITION_PLAYER_LEFT))
