@@ -3038,7 +3038,7 @@ void BeginBattleIntro(void)
 static void BattleMainCB1(void)
 {
     gBattleMainFunc();
-
+    ++gBattleStruct->battleTimer;
     for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
         gBattlerControllerFuncs[gActiveBattler]();
 }
@@ -3161,6 +3161,8 @@ static void BattleStartClearSetData(void)
     }
 
     gBattleStruct->swapDamageCategory = FALSE; // Photon Geyser, Shell Side Arm, Light That Burns the Sky
+
+    CalculateEnemyPartyCount(); // Can be used to check whether Doubles opponent is alone.
 }
 
 void SwitchInClearSetData(void)
@@ -3807,6 +3809,17 @@ static void TryDoEventsBeforeFirstTurn(void)
     }
     memset(gTotemBoosts, 0, sizeof(gTotemBoosts));  // erase all totem boosts just to be safe
 
+    // Raid Intro
+    if (gBattleTypeFlags & BATTLE_TYPE_RAID && !(gBattleStruct->raid.state & RAID_INTRO_COMPLETE))
+    {
+        InitRaidBattleData();
+        gBattlerAttacker = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+        gBattleCommunication[MULTIUSE_STATE] = gRaidTypes[gRaidData->raidType].gimmick;
+        gBattleCommunication[1] = gRaidTypes[gRaidData->raidType].rules;
+        BattleScriptExecute(BattleScript_RaidIntro);
+        return;
+    }
+
     // Check neutralizing gas
     if (AbilityBattleEffects(ABILITYEFFECT_NEUTRALIZINGGAS, 0, 0, 0, 0) != 0)
         return;
@@ -3961,7 +3974,9 @@ void BattleTurnPassed(void)
     gBattleMainFunc = HandleTurnActionSelectionState;
     gRandomTurnNumber = Random();
 
-    if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+    if (gBattleTypeFlags & BATTLE_TYPE_RAID && ShouldRaidKickPlayer()) // Raid Storm check
+        gBattleMainFunc = HandleEndTurn_FinishBattle;
+    else if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
         BattleScriptExecute(BattleScript_PalacePrintFlavorText);
     else if (gBattleTypeFlags & BATTLE_TYPE_ARENA && gBattleStruct->arenaTurnCounter == 0)
         BattleScriptExecute(BattleScript_ArenaTurnBeginning);

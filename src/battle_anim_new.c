@@ -7960,3 +7960,20 @@ void AnimTask_GetWeatherToSet(u8 taskId)
     }
 	DestroyAnimVisualTask(taskId);
 }
+
+// RAIDS
+void AnimTask_GetRaidBattleStormLevel(u8 taskId) // from CFRU
+{
+    switch (gBattleResults.battleTurnCounter)
+    {
+        case 1 ... RAID_STORM_TURNS_LEVEL_1:
+            gBattleAnimArgs[ARG_RET_ID] = 1;
+        case (RAID_STORM_TURNS_LEVEL_1 + 1) ... RAID_STORM_TURNS_LEVEL_2:
+            gBattleAnimArgs[ARG_RET_ID] = 2;
+        case (RAID_STORM_TURNS_LEVEL_2 + 1) ... RAID_STORM_TURNS_LEVEL_3:
+            gBattleAnimArgs[ARG_RET_ID] = 3;
+        case RAID_STORM_TURNS_MAX:
+            gBattleAnimArgs[ARG_RET_ID] = 4;
+    }
+	DestroyAnimVisualTask(taskId);
+}
